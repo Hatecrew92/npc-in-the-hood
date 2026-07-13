@@ -1,662 +1,1034 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NPC in the Hood</title>
-<meta name="description" content="9,990 Zero Heroes on Robinhood Chain. Going to zero.">
-<meta name="theme-color" content="#0b0b0c">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0b0b0c;
-    --bg-alt: #151516;
-    --bg-card: #1c1c1d;
-    --rug-green: #ccff00;
-    --text: #f2f2ed;
-    --text-muted: #8a8a85;
-    --border: #2a2a2b;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NPC in the Hood</title>
+  <meta name="description" content="9,990 Zero Heroes on Robinhood Chain. Going to zero.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --bg-alt: #151516;
+      --bg-card: #1c1c1d;
+      --rug-green: #ccff00;
+      --text: #f2f2ed;
+      --text-muted: #8a8a85;
+      --border: #2a2a2b;
+    }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
-    overflow-x: hidden;
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .display { font-family: 'Bagel Fat One', cursive; line-height: 1; }
-  .mono { font-family: 'JetBrains Mono', monospace; }
-  a { color: inherit; text-decoration: none; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
 
-  /* ---------- NAV ---------- */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px clamp(20px, 5vw, 56px);
-    background: rgba(11, 11, 12, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-  }
+    .display {
+      font-family: 'Bagel Fat One', cursive;
+      line-height: 1;
+    }
 
-  .logo-mark {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Bagel Fat One', cursive;
-    font-size: 18px;
-    letter-spacing: 0.02em;
-    color: var(--text);
-  }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-  .logo-mark .accent-word { color: var(--rug-green); }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  .logo-mark .dot { width: 10px; height: 10px; background: var(--rug-green); border-radius: 50%; flex-shrink: 0; }
+    /* ---------- NAV ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px clamp(20px, 5vw, 56px);
+      background: rgba(11, 11, 12, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
 
-  .nav-right { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Bagel Fat One', cursive;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
 
-  .nav-links {
-    display: flex;
-    gap: clamp(14px, 2vw, 28px);
-    font-size: 13px;
-    color: var(--text-muted);
-    text-transform: lowercase;
-    letter-spacing: 0.02em;
-  }
+    .logo-mark .accent-word {
+      color: var(--rug-green);
+    }
 
-  .nav-links a { transition: color 0.15s ease; }
-  .nav-links a:hover { color: var(--rug-green); }
-  .nav-links .hide-mobile { display: inline; }
+    .logo-mark .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--rug-green);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
 
-  .x-icon {
-    width: 34px;
-    height: 34px;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color 0.15s ease, color 0.15s ease;
-    flex-shrink: 0;
-  }
-  .x-icon svg { width: 15px; height: 15px; fill: var(--text); transition: fill 0.15s ease; }
-  .x-icon:hover { border-color: var(--rug-green); }
-  .x-icon:hover svg { fill: var(--rug-green); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2vw, 28px);
+    }
 
-  @media (max-width: 720px) {
-    .nav-links .hide-mobile { display: none; }
-  }
+    .nav-links {
+      display: flex;
+      gap: clamp(14px, 2vw, 28px);
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+    }
 
-  /* ---------- HERO ---------- */
-  .hero {
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 20px 60px;
-    position: relative;
-  }
+    .nav-links a {
+      transition: color 0.15s ease;
+    }
 
-  .hero-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--rug-green);
-    margin-bottom: 24px;
-    border: 1px solid var(--rug-green);
-    padding: 6px 14px;
-    border-radius: 999px;
-  }
+    .nav-links a:hover {
+      color: var(--rug-green);
+    }
 
-  .hero h1 { font-size: clamp(48px, 10vw, 132px); color: var(--text); letter-spacing: -0.01em; }
-  .hero h1 .accent { color: var(--rug-green); }
+    .nav-links .hide-mobile {
+      display: inline;
+    }
 
-  .hero p.sub {
-    margin-top: 24px;
-    font-size: clamp(16px, 2vw, 20px);
-    color: var(--text-muted);
-    max-width: 520px;
-  }
+    .x-icon {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
 
-  .hero-ctas { margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .x-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: var(--text);
+      transition: fill 0.15s ease;
+    }
 
-  .btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 16px 32px;
-    border-radius: 8px;
-    transition: transform 0.15s ease, background 0.15s ease;
-    display: inline-block;
-    cursor: pointer;
-    border: none;
-  }
+    .x-icon:hover {
+      border-color: var(--rug-green);
+    }
 
-  .btn-primary { background: var(--rug-green); color: #0b0b0c; display: inline-flex; align-items: center; gap: 10px; }
-  .btn-primary:hover { transform: translateY(-2px); }
-  .btn-primary svg { width: 18px; height: 18px; fill: #0b0b0c; }
+    .x-icon:hover svg {
+      fill: var(--rug-green);
+    }
 
-  .scroll-cue {
-    position: absolute;
-    bottom: 24px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-transform: lowercase;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .scroll-cue .arrow { animation: bob 1.6s ease-in-out infinite; }
-  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+    @media (max-width: 720px) {
+      .nav-links .hide-mobile {
+        display: none;
+      }
+    }
 
-  /* ---------- TICKER (signature element) ---------- */
-  .ticker-band {
-    background: var(--rug-green);
-    color: #0b0b0c;
-    overflow: hidden;
-    white-space: nowrap;
-    border-top: 1px solid #0b0b0c;
-    border-bottom: 1px solid #0b0b0c;
-  }
-  .ticker-track { display: inline-flex; animation: scroll-left 18s linear infinite; }
-  .ticker-track span {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 14px 32px;
-    white-space: nowrap;
-  }
-  @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 20px 60px;
+      position: relative;
+    }
 
-  /* ---------- IMAGE BOX ---------- */
-  .box-section {
-    padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 56px);
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rug-green);
+      margin-bottom: 24px;
+      border: 1px solid var(--rug-green);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
 
-  .box-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
+    .hero h1 {
+      font-size: clamp(48px, 10vw, 132px);
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
 
-  .box-actions { display: flex; gap: 12px; }
+    .hero h1 .accent {
+      color: var(--rug-green);
+    }
 
-  .box-actions button {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-  .box-actions button:hover { border-color: var(--rug-green); color: var(--rug-green); }
+    .hero p.sub {
+      margin-top: 24px;
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-muted);
+      max-width: 520px;
+    }
 
-  .carousel {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--bg-alt);
-    padding: 28px;
-  }
+    .hero-ctas {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-  .carousel-arrow {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: border-color 0.15s ease;
-  }
-  .carousel-arrow:hover { border-color: var(--rug-green); }
-  .carousel-arrow svg { width: 16px; height: 16px; stroke: var(--text); }
-  .carousel-arrow:hover svg { stroke: var(--rug-green); }
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 8px;
+      transition: transform 0.15s ease, background 0.15s ease;
+      display: inline-block;
+      cursor: pointer;
+      border: none;
+    }
 
-  .carousel-stage {
-    flex: 1;
-    aspect-ratio: 1 / 1;
-    max-width: 360px;
-    margin: 0 auto;
-    background: var(--rug-green);
-    border-radius: 14px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .btn-primary {
+      background: var(--rug-green);
+      color: #0b0b0c;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  .carousel-stage .npc-silhouette svg { width: 55%; height: 55%; }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
 
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 18px;
-  }
+    .btn-primary svg {
+      width: 18px;
+      height: 18px;
+      fill: #0b0b0c;
+    }
 
-  .carousel-dots .dot-ind {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--border);
-    transition: background 0.15s ease;
-  }
-  .carousel-dots .dot-ind.active { background: var(--rug-green); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
 
-  /* ---------- FOOTER ---------- */
-  footer {
-    padding: 48px clamp(20px, 5vw, 56px) 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    .btn-ghost:hover {
+      border-color: var(--rug-green);
+      color: var(--rug-green);
+    }
 
-  footer .copyright {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
+    .scroll-cue {
+      position: absolute;
+      bottom: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: lowercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
 
-  /* ---------- MODAL ---------- */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(11, 11, 12, 0.85);
-    backdrop-filter: blur(4px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-  }
-  .modal-overlay.open { display: flex; }
+    .scroll-cue .arrow {
+      animation: bob 1.6s ease-in-out infinite;
+    }
 
-  .modal {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    max-width: 440px;
-    width: 100%;
-    padding: 32px;
-    position: relative;
-  }
+    @keyframes bob {
 
-  .modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 18px;
-    background: none;
-    border: none;
-  }
-  .modal-close:hover { color: var(--rug-green); }
+      0%,
+      100% {
+        transform: translateY(0);
+      }
 
-  .modal h3 {
-    font-family: 'Bagel Fat One', cursive;
-    font-size: 26px;
-    color: var(--rug-green);
-    margin-bottom: 8px;
-  }
+      50% {
+        transform: translateY(6px);
+      }
+    }
 
-  .modal p.modal-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+    /* ---------- TICKER (signature element) ---------- */
+    .ticker-band {
+      background: var(--rug-green);
+      color: #0b0b0c;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid #0b0b0c;
+      border-bottom: 1px solid #0b0b0c;
+    }
 
-  .task {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding: 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-  }
+    .ticker-track {
+      display: inline-flex;
+      animation: scroll-left 18s linear infinite;
+    }
 
-  .task-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--rug-green);
-    border: 1px solid var(--rug-green);
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+    .ticker-track span {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      white-space: nowrap;
+    }
 
-  .task-body { flex: 1; }
-  .task-body p { font-size: 14px; margin-bottom: 8px; }
+    @keyframes scroll-left {
+      from {
+        transform: translateX(0);
+      }
 
-  .task-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: var(--rug-green);
-    border: 1px solid var(--rug-green);
-    padding: 6px 12px;
-    border-radius: 6px;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .task-btn:hover { background: var(--rug-green); color: #0b0b0c; }
+      to {
+        transform: translateX(-50%);
+      }
+    }
 
-  .wallet-input {
-    width: 100%;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    margin-top: 4px;
-  }
-  .wallet-input:focus { outline: none; border-color: var(--rug-green); }
+    /* ---------- IMAGE BOX ---------- */
+    .box-section {
+      padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 56px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-  .submit-btn {
-    width: 100%;
-    margin-top: 8px;
-    background: var(--rug-green);
-    color: #0b0b0c;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  .submit-btn:hover { transform: translateY(-1px); }
-  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .box-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
 
-  .form-status {
-    margin-top: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    text-align: center;
-    color: var(--text-muted);
-    min-height: 16px;
-  }
-</style>
+    .box-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .box-actions button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .box-actions button:hover {
+      border-color: var(--rug-green);
+      color: var(--rug-green);
+    }
+
+    .carousel {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-alt);
+      padding: 28px;
+    }
+
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.15s ease;
+    }
+
+    .carousel-arrow:hover {
+      border-color: var(--rug-green);
+    }
+
+    .carousel-arrow svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text);
+    }
+
+    .carousel-arrow:hover svg {
+      stroke: var(--rug-green);
+    }
+
+    .carousel-stage {
+      flex: 1;
+      aspect-ratio: 1 / 1;
+      max-width: 360px;
+      margin: 0 auto;
+      background: var(--rug-green);
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-stage .npc-silhouette svg {
+      width: 55%;
+      height: 55%;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 18px;
+    }
+
+    .carousel-dots .dot-ind {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.15s ease;
+    }
+
+    .carousel-dots .dot-ind.active {
+      background: var(--rug-green);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 48px clamp(20px, 5vw, 56px) 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    footer .copyright {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ---------- MODAL ---------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 11, 12, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 440px;
+      width: 100%;
+      padding: 32px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      background: none;
+      border: none;
+    }
+
+    .modal-close:hover {
+      color: var(--rug-green);
+    }
+
+    .modal h3 {
+      font-family: 'Bagel Fat One', cursive;
+      font-size: 26px;
+      color: var(--rug-green);
+      margin-bottom: 8px;
+    }
+
+    .modal p.modal-sub {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .task {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .task-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--rug-green);
+      border: 1px solid var(--rug-green);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .task-body {
+      flex: 1;
+    }
+
+    .task-body p {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .task-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--rug-green);
+      border: 1px solid var(--rug-green);
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .task-btn:hover {
+      background: var(--rug-green);
+      color: #0b0b0c;
+    }
+
+    .wallet-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .wallet-input:focus {
+      outline: none;
+      border-color: var(--rug-green);
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 8px;
+      background: var(--rug-green);
+      color: #0b0b0c;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-status {
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-align: center;
+      color: var(--text-muted);
+      min-height: 16px;
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo-mark"><span class="dot"></span> NPC in the <span class="accent-word">Hood</span></div>
-  <div class="nav-right">
-    <a class="x-icon" href="https://x.com/npcsinthehood" target="_blank" aria-label="X">
-      <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.9L4.8 22H1.7l8.1-9.3L1 2h7.1l4.9 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>
-    </a>
-  </div>
-</nav>
+  <nav>
+    <div class="logo-mark"><span class="dot"></span> NPC in the <span class="accent-word">Hood</span></div>
+    <div class="nav-right">
+      <a class="x-icon" href="https://x.com/npcsinthehood" target="_blank" aria-label="X">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.9L4.8 22H1.7l8.1-9.3L1 2h7.1l4.9 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z" />
+        </svg>
+      </a>
+    </div>
+  </nav>
 
-<section class="hero">
-  <div class="hero-eyebrow">robinhood chain · 9,990 supply</div>
-  <h1 class="display">
-    NPC in<br>the <span class="accent">Hood</span>.
-  </h1>
-  <p class="sub">They said they'd go to zero. Then they mooned. We won't make that mistake.</p>
-  <div class="hero-ctas">
-    <button class="btn btn-primary" onclick="openModal()">Register Now</button>
-  </div>
-</section>
+  <section class="hero">
+    <div class="hero-eyebrow">robinhood chain · 9,990 supply</div>
+    <h1 class="display">
+      NPC in<br>the <span class="accent">Hood</span>.
+    </h1>
+    <p class="sub">They said they'd go to zero. Then they mooned. We won't make that mistake.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-primary" onclick="openModal()">Register Now</button>
+      <button class="btn btn-ghost" onclick="openStatusModal()">Check WL Status</button>
+    </div>
+  </section>
 
-<div class="ticker-band">
-  <div class="ticker-track">
-    <span>NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY · GOING TO ZERO ·</span>
-    <span>NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY · GOING TO ZERO ·</span>
-  </div>
-</div>
-
-<section class="box-section" id="box">
-  <div class="box-header">
-    <div class="box-actions">
-      <button onclick="randomizeCarousel()">randomize</button>
-      <button onclick="downloadCurrent()">download</button>
+  <div class="ticker-band">
+    <div class="ticker-track">
+      <span>NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY
+        · GOING TO ZERO ·</span>
+      <span>NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY · GOING TO ZERO · NO ROADMAP · NO UTILITY
+        · GOING TO ZERO ·</span>
     </div>
   </div>
 
-  <div class="carousel">
-    <div class="carousel-arrow" onclick="prevSlide()" aria-label="previous">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-    </div>
-    <div class="carousel-stage" id="carouselStage"></div>
-    <div class="carousel-arrow" onclick="nextSlide()" aria-label="next">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-    </div>
-  </div>
-  <div class="carousel-dots" id="carouselDots"></div>
-</section>
-
-<footer>
-  <div class="copyright">© 2026 · mission zero · all rights reserved</div>
-</footer>
-
-<!-- ---------- MODAL ---------- -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3>Be a Zero Hero</h3>
-    <p class="modal-sub">Complete all three to register for the whitelist.</p>
-
-    <div class="task">
-      <div class="task-num">1</div>
-      <div class="task-body">
-        <p>Follow <strong>@npcsinthehood</strong> on X</p>
-        <a class="task-btn" href="https://x.com/npcsinthehood" target="_blank">Follow</a>
+  <section class="box-section" id="box">
+    <div class="box-header">
+      <div class="box-actions">
+        <button onclick="randomizeCarousel()">randomize</button>
+        <button onclick="downloadCurrent()">download</button>
       </div>
     </div>
 
-    <div class="task">
-      <div class="task-num">2</div>
-      <div class="task-body">
-        <p>Retweet the pinned post</p>
-        <a class="task-btn" href="https://x.com/npcsinthehood/status/2076121653516669066?s=20" target="_blank" id="retweetLink">Retweet</a>
+    <div class="carousel">
+      <div class="carousel-arrow" onclick="prevSlide()" aria-label="previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </div>
+      <div class="carousel-stage" id="carouselStage"></div>
+      <div class="carousel-arrow" onclick="nextSlide()" aria-label="next">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6" />
+        </svg>
       </div>
     </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </section>
 
-    <div class="task">
-      <div class="task-num">3</div>
-      <div class="task-body">
-        <p>Register your wallet for WL</p>
-        <input type="text" class="wallet-input" id="xHandleInput" placeholder="your X handle (e.g. @yourname)">
-        <input type="text" class="wallet-input" id="walletInput" placeholder="0x... wallet address" style="margin-top:8px;">
+  <!-- ---------- STATUS CHECK MODAL ---------- -->
+  <div class="modal-overlay" id="statusModalOverlay">
+    <div class="modal" style="max-width:480px;">
+      <button class="modal-close" onclick="closeStatusModal()">✕</button>
+      <h3>Check WL Status</h3>
+      <p class="modal-sub">Enter your wallet to see if you made the list.</p>
+
+      <div id="statusCheckStage">
+        <input type="text" class="wallet-input" id="statusWalletInput" placeholder="0x... wallet address">
+        <button class="submit-btn" id="statusCheckBtn" onclick="checkWLStatus()" style="margin-top:12px;">Check
+          Status</button>
+        <p class="form-status" id="statusResult"></p>
+      </div>
+
+      <div id="statusCardStage" style="display:none;">
+        <p class="modal-sub" style="color:#ccff00;font-weight:600;">You're whitelisted! Enter your X handle to download
+          your card.</p>
+        <input type="text" class="wallet-input" id="statusHandleInput" placeholder="@yourhandle (for the card)"
+          style="margin-bottom:12px;">
+        <button class="submit-btn" onclick="generateWLCard()" style="margin-bottom:12px;">Generate Card</button>
+        <canvas id="wlCardCanvas" width="692" height="692"
+          style="width:100%;border-radius:12px;display:none;margin-bottom:16px;"></canvas>
+        <div id="cardActionButtons" style="display:none;gap:10px;">
+          <button class="submit-btn" style="flex:1;" onclick="downloadCard()">Download Card</button>
+          <button class="submit-btn" style="flex:1;background:var(--text);" onclick="shareCardOnX()">Share on X</button>
+        </div>
       </div>
     </div>
-
-    <button class="submit-btn" id="submitBtn" onclick="submitWL()">Submit</button>
-    <p class="form-status" id="formStatus"></p>
   </div>
-</div>
 
-<script>
-  const NPC_SVG = `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <footer>
+    <div class="copyright">© 2026 · mission zero · all rights reserved</div>
+  </footer>
+
+  <!-- ---------- MODAL ---------- -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>Be a Zero Hero</h3>
+      <p class="modal-sub">Complete all three to register for the whitelist.</p>
+
+      <div class="task">
+        <div class="task-num">1</div>
+        <div class="task-body">
+          <p>Follow <strong>@npcsinthehood</strong> on X</p>
+          <a class="task-btn" href="https://x.com/npcsinthehood" target="_blank">Follow</a>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-num">2</div>
+        <div class="task-body">
+          <p>Retweet the pinned post</p>
+          <a class="task-btn" href="https://x.com/npcsinthehood/status/2076121653516669066?s=20" target="_blank"
+            id="retweetLink">Retweet</a>
+        </div>
+      </div>
+
+      <div class="task">
+        <div class="task-num">3</div>
+        <div class="task-body">
+          <p>Register your wallet for WL</p>
+          <input type="text" class="wallet-input" id="xHandleInput" placeholder="your X handle (e.g. @yourname)">
+          <input type="text" class="wallet-input" id="walletInput" placeholder="0x... wallet address"
+            style="margin-top:8px;">
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitWL()">Submit</button>
+      <p class="form-status" id="formStatus"></p>
+    </div>
+  </div>
+
+  <script>
+    const NPC_SVG = `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="50" cy="38" r="22" fill="#0b0b0c"/>
     <rect x="28" y="60" width="44" height="34" rx="10" fill="#0b0b0c"/>
   </svg>`;
 
-  // Folder where your NPC images live, relative to this HTML file.
-  // Put your final .png files in a folder called "npc-images" right next
-  // to index.html, named exactly by token id, e.g. npc-images/123.png
-  const IMAGE_FOLDER = "npc-images";
+    // Folder where your NPC images live, relative to this HTML file.
+    // Put your final .png files in a folder called "npc-images" right next
+    // to index.html, named exactly by token id, e.g. npc-images/123.png
+    const IMAGE_FOLDER = "npc-images";
 
-  // Curated teaser set — only these images are ever shown in the carousel.
-  // Add/remove IDs here as you change which NPCs you want to showcase.
-  const TEASER_IDS = [1, 3, 5, 7, 11, 14, 22, 26, 35, 42, 51, 56];
+    // Curated teaser set — only these images are ever shown in the carousel.
+    // Add/remove IDs here as you change which NPCs you want to showcase.
+    const TEASER_IDS = [1, 3, 5, 7, 11, 14, 22, 26, 35, 42, 51, 56];
 
-  let carouselIds = [];
-  let currentSlide = 0;
+    let carouselIds = [];
+    let currentSlide = 0;
 
-  function generateIds() {
-    // Shuffle a copy of the curated list so randomize cycles through all 12
-    // in a random order without repeats until they're all shown once.
-    const ids = [...TEASER_IDS];
-    for (let i = ids.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [ids[i], ids[j]] = [ids[j], ids[i]];
+    function generateIds() {
+      // Shuffle a copy of the curated list so randomize cycles through all 12
+      // in a random order without repeats until they're all shown once.
+      const ids = [...TEASER_IDS];
+      for (let i = ids.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [ids[i], ids[j]] = [ids[j], ids[i]];
+      }
+      return ids;
     }
-    return ids;
-  }
 
-  function renderCarousel() {
-    const stage = document.getElementById('carouselStage');
-    const id = carouselIds[currentSlide];
-    stage.dataset.currentId = id;
+    function renderCarousel() {
+      const stage = document.getElementById('carouselStage');
+      const id = carouselIds[currentSlide];
+      stage.dataset.currentId = id;
 
-    stage.innerHTML = `<img src="${IMAGE_FOLDER}/${id}.png" alt="NPC #${id}"
+      stage.innerHTML = `<img src="${IMAGE_FOLDER}/${id}.png" alt="NPC #${id}"
       style="width:100%;height:100%;object-fit:cover;"
       onerror="this.replaceWith(Object.assign(document.createElement('div'), {className:'npc-silhouette', innerHTML: NPC_SVG}))">`;
 
-    const dots = document.getElementById('carouselDots');
-    dots.innerHTML = '';
-    carouselIds.forEach((id, i) => {
-      const d = document.createElement('div');
-      d.className = 'dot-ind' + (i === currentSlide ? ' active' : '');
-      dots.appendChild(d);
-    });
-  }
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % carouselIds.length;
-    renderCarousel();
-  }
-
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + carouselIds.length) % carouselIds.length;
-    renderCarousel();
-  }
-
-  function randomizeCarousel() {
-    carouselIds = generateIds();
-    currentSlide = 0;
-    renderCarousel();
-  }
-
-  function downloadCurrent() {
-    const stage = document.getElementById('carouselStage');
-    const id = stage.dataset.currentId;
-    const link = document.createElement('a');
-    link.href = `${IMAGE_FOLDER}/${id}.png`;
-    link.download = `npc-${id}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  carouselIds = generateIds();
-  renderCarousel();
-
-  // ---------- MODAL ----------
-  function openModal() { document.getElementById('modalOverlay').classList.add('open'); }
-  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
-
-  // IMPORTANT: replace this with your own Google Apps Script Web App URL
-  // (see setup notes below the code)
-  const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxoeQt34FwvGm2PQQ20fKURj5F-57x1RXyzCdq0_AthJly-S6-8MJovcDifDw1jFapXnQ/exec";
-
-  async function getVisitorInfo() {
-    try {
-      const res = await fetch("https://ipapi.co/json/");
-      const geo = await res.json();
-      return {
-        city: geo.city || "",
-        state: geo.region || "",
-        country: geo.country_name || "",
-        ip: geo.ip || ""
-      };
-    } catch (err) {
-      return { city: "", state: "", country: "", ip: "" };
-    }
-  }
-
-  async function submitWL() {
-    const xHandle = document.getElementById('xHandleInput').value.trim();
-    const wallet = document.getElementById('walletInput').value.trim();
-    const status = document.getElementById('formStatus');
-    const btn = document.getElementById('submitBtn');
-
-    if (!xHandle || !wallet) {
-      status.textContent = "Fill in both your X handle and wallet address.";
-      status.style.color = "#ff6666";
-      return;
-    }
-    if (!/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
-      status.textContent = "That doesn't look like a valid wallet address.";
-      status.style.color = "#ff6666";
-      return;
-    }
-
-    btn.disabled = true;
-    status.style.color = "#8a8a85";
-    status.textContent = "Submitting...";
-
-    const visitor = await getVisitorInfo();
-
-    try {
-      await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          xHandle,
-          wallet,
-          timestamp: new Date().toISOString(),
-          city: visitor.city,
-          state: visitor.state,
-          country: visitor.country,
-          ip: visitor.ip,
-          device: navigator.userAgent,
-          source: document.referrer || "direct"
-        })
+      const dots = document.getElementById('carouselDots');
+      dots.innerHTML = '';
+      carouselIds.forEach((id, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot-ind' + (i === currentSlide ? ' active' : '');
+        dots.appendChild(d);
       });
-      status.style.color = "#ccff00";
-      status.textContent = "You're on the list. Welcome to zero.";
-    } catch (err) {
-      status.style.color = "#ff6666";
-      status.textContent = "Something went wrong. Try again.";
-      btn.disabled = false;
     }
-  }
-</script>
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % carouselIds.length;
+      renderCarousel();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + carouselIds.length) % carouselIds.length;
+      renderCarousel();
+    }
+
+    function randomizeCarousel() {
+      carouselIds = generateIds();
+      currentSlide = 0;
+      renderCarousel();
+    }
+
+    function downloadCurrent() {
+      const stage = document.getElementById('carouselStage');
+      const id = stage.dataset.currentId;
+      const link = document.createElement('a');
+      link.href = `${IMAGE_FOLDER}/${id}.png`;
+      link.download = `npc-${id}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    carouselIds = generateIds();
+    renderCarousel();
+
+    // ---------- MODAL ----------
+    function openModal() { document.getElementById('modalOverlay').classList.add('open'); }
+    function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+    function openStatusModal() {
+      document.getElementById('statusModalOverlay').classList.add('open');
+      document.getElementById('statusCheckStage').style.display = 'block';
+      document.getElementById('statusCardStage').style.display = 'none';
+      document.getElementById('statusResult').textContent = '';
+      document.getElementById('statusWalletInput').value = '';
+      document.getElementById('statusHandleInput').value = '';
+      document.getElementById('wlCardCanvas').style.display = 'none';
+      document.getElementById('cardActionButtons').style.display = 'none';
+    }
+    function closeStatusModal() { document.getElementById('statusModalOverlay').classList.remove('open'); }
+
+    const SHARE_COPYLINES = [
+      "Exclusive access to guaranteed disappointment.",
+      "Front row seat to the floor.",
+      "Got in early. Going down first.",
+      "Reserved my spot for rock bottom.",
+      "Skipped the waitlist. Straight to zero.",
+      "Priority access to the crash.",
+      "Guaranteed spot. Guaranteed regret."
+    ];
+
+    async function checkWLStatus() {
+      const wallet = document.getElementById('statusWalletInput').value.trim();
+      const result = document.getElementById('statusResult');
+      const btn = document.getElementById('statusCheckBtn');
+
+      if (!/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
+        result.style.color = "#ff6666";
+        result.textContent = "That doesn't look like a valid wallet address.";
+        return;
+      }
+
+      btn.disabled = true;
+      result.style.color = "#8a8a85";
+      result.textContent = "Checking...";
+
+      try {
+        const res = await fetch(`${GOOGLE_SHEET_WEBHOOK_URL}?wallet=${wallet}`);
+        const data = await res.json();
+
+        if (data.registered) {
+          document.getElementById('statusCheckStage').style.display = 'none';
+          document.getElementById('statusCardStage').style.display = 'block';
+        } else {
+          result.style.color = "#f2f2ed";
+          result.innerHTML = `Not on the list yet. <span style="color:#ccff00;text-decoration:underline;cursor:pointer;" onclick="closeStatusModal(); openModal();">Register now</span> for your shot at the whitelist.`;
+          btn.disabled = false;
+        }
+      } catch (err) {
+        result.style.color = "#ff6666";
+        result.textContent = "Something went wrong. Try again.";
+        btn.disabled = false;
+      }
+    }
+
+    function generateWLCard() {
+      const canvas = document.getElementById('wlCardCanvas');
+      canvas.width = 692;
+      canvas.height = 692;
+      const ctx = canvas.getContext('2d');
+
+      const tokenId = TEASER_IDS[Math.floor(Math.random() * TEASER_IDS.length)];
+      const copy = SHARE_COPYLINES[Math.floor(Math.random() * SHARE_COPYLINES.length)];
+      const handle = document.getElementById('statusHandleInput').value.trim().replace(/^@/, '');
+      const handleText = handle ? `@${handle}` : '';
+
+      const template = new Image();
+      template.onload = () => {
+        ctx.drawImage(template, 0, 0, 692, 692);
+
+        // Character zone (bottom portion) - CONTAIN fit, no cropping
+        const charZone = { x: 170, y: 360, w: 355, h: 332 };
+        ctx.fillStyle = "#ccff00";
+        ctx.fillRect(charZone.x, charZone.y, charZone.w, charZone.h);
+
+        const npcImg = new Image();
+        npcImg.onload = () => {
+          const scale = Math.min(charZone.w / npcImg.width, charZone.h / npcImg.height);
+          const drawW = npcImg.width * scale;
+          const drawH = npcImg.height * scale;
+          const offsetX = charZone.x + (charZone.w - drawW) / 2;
+          const offsetY = charZone.y + (charZone.h - drawH) / 2;
+          ctx.drawImage(npcImg, offsetX, offsetY, drawW, drawH);
+
+          drawTextZones();
+          canvas.style.display = 'block';
+          document.getElementById('cardActionButtons').style.display = 'flex';
+        };
+        npcImg.src = `npc-images/${tokenId}.png`;
+      };
+      template.src = "assets/whitelist-template.png";
+
+      function drawTextZones() {
+        // Copy tagline zone
+        const copyZone = { x: 140, y: 195, w: 412, h: 67 };
+        ctx.fillStyle = "#ccff00";
+        ctx.fillRect(copyZone.x, copyZone.y, copyZone.w, copyZone.h);
+        ctx.fillStyle = "#0b0b0c";
+        ctx.font = "bold 20px Arial";
+        ctx.textAlign = "center";
+        // Center vertically in the gap between "WHITELISTED" (ends ~191) and handle zone (starts 278)
+        wrapText(ctx, copy.toUpperCase(), copyZone.x + copyZone.w / 2, 235, copyZone.w - 10, 26);
+
+        // Handle zone
+        const handleZone = { x: 140, y: 278, w: 412, h: 57 };
+        ctx.fillStyle = "#ccff00";
+        ctx.fillRect(handleZone.x, handleZone.y, handleZone.w, handleZone.h);
+        ctx.fillStyle = "#0b0b0c";
+        ctx.font = "bold 32px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(handleText, handleZone.x + handleZone.w / 2, handleZone.y + 38);
+      }
+
+      canvas.dataset.copy = copy;
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      const lines = [];
+      for (let word of words) {
+        const test = line + word + ' ';
+        if (ctx.measureText(test).width > maxWidth && line !== '') {
+          lines.push(line);
+          line = word + ' ';
+        } else {
+          line = test;
+        }
+      }
+      lines.push(line);
+      const startY = y - ((lines.length - 1) * lineHeight) / 2;
+      lines.forEach((l, i) => ctx.fillText(l.trim(), x, startY + i * lineHeight));
+    }
+
+    function downloadCard() {
+      const canvas = document.getElementById('wlCardCanvas');
+      const link = document.createElement('a');
+      link.download = 'npc-whitelisted-card.png';
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function shareCardOnX() {
+      const canvas = document.getElementById('wlCardCanvas');
+      const copy = canvas.dataset.copy || "I'm whitelisted for NPC IN THE HOOD.";
+      const text = encodeURIComponent(`${copy}\n\n@npcsinthehood`);
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+    }
+
+    // IMPORTANT: replace this with your own Google Apps Script Web App URL
+    // (see setup notes below the code)
+    const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxoeQt34FwvGm2PQQ20fKURj5F-57x1RXyzCdq0_AthJly-S6-8MJovcDifDw1jFapXnQ/exec";
+
+    async function getVisitorInfo() {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const geo = await res.json();
+        return {
+          city: geo.city || "",
+          state: geo.region || "",
+          country: geo.country_name || "",
+          ip: geo.ip || ""
+        };
+      } catch (err) {
+        return { city: "", state: "", country: "", ip: "" };
+      }
+    }
+
+    async function submitWL() {
+      const xHandle = document.getElementById('xHandleInput').value.trim();
+      const wallet = document.getElementById('walletInput').value.trim();
+      const status = document.getElementById('formStatus');
+      const btn = document.getElementById('submitBtn');
+
+      if (!xHandle || !wallet) {
+        status.textContent = "Fill in both your X handle and wallet address.";
+        status.style.color = "#ff6666";
+        return;
+      }
+      if (!/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
+        status.textContent = "That doesn't look like a valid wallet address.";
+        status.style.color = "#ff6666";
+        return;
+      }
+
+      btn.disabled = true;
+      status.style.color = "#8a8a85";
+      status.textContent = "Submitting...";
+
+      const visitor = await getVisitorInfo();
+
+      try {
+        await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            xHandle,
+            wallet,
+            timestamp: new Date().toISOString(),
+            city: visitor.city,
+            state: visitor.state,
+            country: visitor.country,
+            ip: visitor.ip,
+            device: navigator.userAgent,
+            source: document.referrer || "direct"
+          })
+        });
+        status.style.color = "#ccff00";
+        status.textContent = "You're on the list. Welcome to zero.";
+      } catch (err) {
+        status.style.color = "#ff6666";
+        status.textContent = "Something went wrong. Try again.";
+        btn.disabled = false;
+      }
+    }
+  </script>
 
 </body>
+
 </html>
