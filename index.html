@@ -12,6 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet">
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdukFMtAAAAAEU3I-BCEZrBp7kHuAyOcKety_UT"></script>
   <style>
     :root {
       --bg: #0b0b0c;
@@ -719,6 +720,8 @@
           <input type="text" class="wallet-input" id="xHandleInput" placeholder="your X handle (e.g. @yourname)">
           <input type="text" class="wallet-input" id="walletInput" placeholder="0x... wallet address"
             style="margin-top:8px;">
+          <input type="text" name="website" id="honeypotField" style="position:absolute;left:-9999px;" tabindex="-1"
+            autocomplete="off">
         </div>
       </div>
 
@@ -982,8 +985,16 @@
     async function submitWL() {
       const xHandle = document.getElementById('xHandleInput').value.trim();
       const wallet = document.getElementById('walletInput').value.trim();
+      const honeypot = document.getElementById('honeypotField').value.trim();
       const status = document.getElementById('formStatus');
       const btn = document.getElementById('submitBtn');
+
+      // Silent bot trap: if the hidden field got filled, quietly pretend success
+      if (honeypot !== '') {
+        status.style.color = "#ccff00";
+        status.textContent = "You're on the list. Welcome to zero.";
+        return;
+      }
 
       if (!xHandle || !wallet) {
         status.textContent = "Fill in both your X handle and wallet address.";
@@ -1002,30 +1013,35 @@
 
       const visitor = await getVisitorInfo();
 
-      try {
-        await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            xHandle,
-            wallet,
-            timestamp: new Date().toISOString(),
-            city: visitor.city,
-            state: visitor.state,
-            country: visitor.country,
-            ip: visitor.ip,
-            device: navigator.userAgent,
-            source: document.referrer || "direct"
-          })
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LdukFMtAAAAAEU3I-BCEZrBp7kHuAyOcKety_UT', { action: 'submit_wl' }).then(async function (recaptchaToken) {
+          try {
+            await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                xHandle,
+                wallet,
+                timestamp: new Date().toISOString(),
+                city: visitor.city,
+                state: visitor.state,
+                country: visitor.country,
+                ip: visitor.ip,
+                device: navigator.userAgent,
+                source: document.referrer || "direct",
+                recaptchaToken
+              })
+            });
+            status.style.color = "#ccff00";
+            status.textContent = "You're on the list. Welcome to zero.";
+          } catch (err) {
+            status.style.color = "#ff6666";
+            status.textContent = "Something went wrong. Try again.";
+            btn.disabled = false;
+          }
         });
-        status.style.color = "#ccff00";
-        status.textContent = "You're on the list. Welcome to zero.";
-      } catch (err) {
-        status.style.color = "#ff6666";
-        status.textContent = "Something went wrong. Try again.";
-        btn.disabled = false;
-      }
+      });
     }
   </script>
 
