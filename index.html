@@ -600,6 +600,10 @@
   <nav>
     <div class="logo-mark"><span class="dot"></span> NPC in the <span class="accent-word">Hood</span></div>
     <div class="nav-right">
+      <a class="x-icon" href="https://opensea.io/collection/robinhood-npcs/" target="_blank" aria-label="OpenSea"
+        style="margin-right:8px;">
+        <img src="assets/opensea-icon-only.png" alt="OpenSea" style="width:20px;height:20px;border-radius:50%;">
+      </a>
       <a class="x-icon" href="https://x.com/npcsinthehood" target="_blank" aria-label="X">
         <svg viewBox="0 0 24 24">
           <path
@@ -616,10 +620,36 @@
     </h1>
     <p class="sub">They said they'd go to zero. Then they mooned. We won't make that mistake.</p>
     <div class="hero-ctas">
-      <button class="btn btn-primary" disabled style="opacity:0.5;cursor:not-allowed;"
-        title="Registrations are closed">Registrations Closed</button>
-      <button class="btn btn-ghost" onclick="openStatusModal()">Check WL Status</button>
-    </div>
+      <div class="hero-ctas" id="countdownStage" style="display:block;">
+        <p
+          style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">
+          Mint goes live in</p>
+        <div id="countdownTimer"
+          style="font-family:'Bagel Fat One',cursive;font-size:clamp(32px,6vw,56px);color:var(--rug-green);margin-bottom:20px;">
+        </div>
+        <div style="display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap;">
+          <span onclick="openStatusModal()"
+            style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--rug-green);text-decoration:underline;cursor:pointer;">Check
+            eligibility</span>
+          <a href="https://opensea.io/collection/robinhood-npcs/" target="_blank"
+            style="display:inline-flex;align-items:center;">
+            <img src="assets/opensea-logo.png" alt="OpenSea" style="height:28px;width:auto;">
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-ctas" id="mintLiveStage" style="display:none;">
+        <div
+          style="font-family:'Bagel Fat One',cursive;font-size:clamp(32px,6vw,56px);color:var(--rug-green);margin-bottom:16px;">
+          MINT IS LIVE</div>
+        <p
+          style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:clamp(16px,2vw,20px);color:var(--text-muted);margin-bottom:24px;">
+          Mint now on <img src="assets/opensea-logo.png" alt="OpenSea"
+            style="height:20px;width:auto;vertical-align:middle;">
+        </p>
+        <a href="https://opensea.io/collection/robinhood-npcs/" target="_blank" class="btn btn-primary"
+          style="display:inline-block;">Mint Here</a>
+      </div>
   </section>
 
   <div class="ticker-band">
@@ -804,6 +834,37 @@
 
     carouselIds = generateIds();
     renderCarousel();
+
+    // ---------- MINT COUNTDOWN ----------
+    const MINT_TIME_UTC = new Date("2026-07-17T14:30:00Z").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = MINT_TIME_UTC - now;
+
+      if (distance <= 0) {
+        document.getElementById('countdownStage').style.display = 'none';
+        document.getElementById('mintLiveStage').style.display = 'block';
+        clearInterval(countdownInterval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      const parts = [];
+      if (days > 0) parts.push(`${days}d`);
+      parts.push(`${String(hours).padStart(2, '0')}h`);
+      parts.push(`${String(minutes).padStart(2, '0')}m`);
+      parts.push(`${String(seconds).padStart(2, '0')}s`);
+
+      document.getElementById('countdownTimer').textContent = parts.join(' ');
+    }
+
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
 
     // ---------- MODAL ----------
     function openModal() { document.getElementById('modalOverlay').classList.add('open'); }
